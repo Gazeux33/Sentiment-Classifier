@@ -5,6 +5,10 @@ import json
 MODEL_PATH = "SC.keras"
 TOKENIZER_PATH = "tokenizer.json"
 
+GREEN = '\033[92m'
+RED = '\033[91m'
+RESET = '\033[0m'
+
 
 class Application:
     def __init__(self):
@@ -22,9 +26,9 @@ class Application:
             text_pad = tf.keras.preprocessing.sequence.pad_sequences(text_vec, maxlen=self.max_size, padding="post")
             ans = self.model.predict(text_pad, verbose=False)[0][0]
             if ans > 0.5:
-                print(f"It's a positive sentence at {round(ans*100,2)}%")
+                print(GREEN +f"It's a positive sentence at {round(ans * 100, 2)}%"+RESET)
             else:
-                print(f"It's a negative sentence at {round((1-ans)*100,2)}")
+                print(RED+f"It's a negative sentence at {round((1 - ans) * 100, 2)}"+RESET)
 
     @staticmethod
     def load_tokenizer():
